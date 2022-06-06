@@ -82,6 +82,11 @@ class Graph extends CI_Controller
 		$graphData = $this->NodeModel->getData();
 		echo json_encode($graphData);
 	}
+	public function ajaxdatajoin()
+	{
+		$graphData = $this->NodeModel->getDatajoin();
+		echo json_encode($graphData);
+	}
 
 	/**
 	 * ajaxlist
@@ -101,6 +106,23 @@ class Graph extends CI_Controller
 		});
 		$datatables->add('aksi', function ($data) {
 			return '<button onclick="showModalEditGraph(' . $data['id'] . ')" class="btn btn-primary"><i class="dripicons-document-edit"></i></button>&nbsp;<a href="#" onclick="deleteData(' . $data['id'] . ')" class="btn btn-danger"><i class="dripicons-trash"></i></a>';
+		});
+		echo $datatables->generate();
+	}
+
+	public function ajaxlistID($id)
+	{
+		$datatables = new Datatables(new CodeigniterAdapter);
+		$datatables->query("SELECT graph.id,n1.name as name1,n2.name as name2,distance,time FROM graph INNER JOIN node as n1 ON n1.id = graph.start INNER JOIN node as n2 ON n2.id = graph.end WHERE graph.start='$id' ORDER BY graph.distance ASC");
+		$datatables->hide('id');
+		$datatables->edit('distance', function ($data) {
+			return $data['distance'] . ' Kilometer';
+		});
+		$datatables->edit('time', function ($data) {
+			return $data['time'] . ' Menit';
+		});
+		$datatables->add('aksi', function ($data) {
+			return '';
 		});
 		echo $datatables->generate();
 	}

@@ -98,6 +98,20 @@
 			}
 		});
 
+		//tombol kontrol
+		map.addControl(new mapboxgl.NavigationControl());
+		map.addControl(
+			new mapboxgl.GeolocateControl({
+				positionOptions: {
+					enableHighAccuracy: true
+				},
+				// Saat aktif, peta akan menerima pembaruan ke lokasi perangkat saat berubah.
+				trackUserLocation: true,
+				// Gambar panah di sebelah titik lokasi untuk menunjukkan arah yang dituju perangkat.
+				showUserHeading: true
+			})
+			);
+
 		var marker = [];
 
 		$.ajax({

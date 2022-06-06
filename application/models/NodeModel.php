@@ -99,6 +99,13 @@ class NodeModel extends CI_Model
 		return $this->db->get($this->tb_,)->result();
 	}
 
+
+	public function getDatajoin()
+	{
+		return $this->db->query("SELECT graph.id,graph.start,n1.name as name1,n2.name as name2,distance,time FROM graph INNER JOIN node as n1 ON n1.id = graph.start INNER JOIN node as n2 ON n2.id = graph.end")->result();
+	}
+
+
 	/**
 	 * countRS
 	 *
